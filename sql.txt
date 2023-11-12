@@ -1,0 +1,22 @@
+CREATE TABLE [Service] (
+    [Id] Uniqueidentifier NOT NULL IDENTITY,
+    [ServiceName] nvarchar(100) NOT NULL,
+    CONSTRAINT [PK_Service] PRIMARY KEY ([Id])
+);
+
+CREATE TABLE [User] (
+    [Id] Uniqueidentifier NOT NULL IDENTITY,
+    [UserIdName] VARCHAR(30) NOT NULL,
+    [Role] INT NOT NULL,
+    [Status] INT NOT NULL,
+    [SigninMethod] INT NOT NULL,
+    CONSTRAINT [PK_User] PRIMARY KEY ([Id])
+);
+
+CREATE TABLE [ServiceUser] (
+    [ServicesId] Uniqueidentifier NOT NULL,
+    [UserId] Uniqueidentifier NOT NULL,
+    CONSTRAINT [PK_ServiceUser] PRIMARY KEY ([ServicesId], [UserId]),
+    CONSTRAINT [FK_ServiceUser_Service_ServicesId] FOREIGN KEY ([ServicesId]) REFERENCES [Service] ([Id]) ON DELETE CASCADE,
+    CONSTRAINT [FK_ServiceUser_User_UserId] FOREIGN KEY ([UserId]) REFERENCES [User] ([Id]) ON DELETE CASCADE
+);
